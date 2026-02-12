@@ -34,8 +34,8 @@
     "react": "https://esm.sh/react@18.3.1",
     "react-dom": "https://esm.sh/react-dom@18.3.1",
     "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-    "lucide-react": "https://esm.sh/lucide-react@0.460.0?external=react",
-    "recharts": "https://esm.sh/recharts@2.13.3?external=react,react-dom",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@18.3.1",
+    "recharts": "https://esm.sh/recharts@2.13.3?deps=react@18.3.1,react-dom@18.3.1",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
     "react/": "https://esm.sh/react@^19.2.4/"
   }
@@ -45,15 +45,15 @@
 <body>
     <div id="root"></div>
 
-    <!-- On retire data-type="module" car sur GitHub Pages, cela force le navigateur à essayer
-         de charger index.tsx comme un module natif, ce qui échoue à cause du type MIME.
-         Babel s'occupera de fetch le fichier lui-même. -->
+    <!-- Chargement via Babel pour contourner les restrictions MIME de GitHub Pages -->
     <script type="text/babel" data-presets="react,typescript" src="index.tsx"></script>
 
     <script>
-        window.onerror = function(msg) {
-            if (msg.includes('MIME')) {
-                console.warn("Tentative de contournement de l'erreur MIME...");
+        // Gestionnaire d'erreurs pour le débogage en production
+        window.onerror = function(msg, url, line) {
+            console.error("Détails de l'erreur :", msg, "à", url, "ligne", line);
+            if (msg.includes('MIME') || msg.includes('invariant=31')) {
+                console.warn("Conflit de type ou de version détecté. Tentative de correction automatique via l'importmap.");
             }
         };
     </script>
