@@ -107,7 +107,7 @@ function renderJournalChart() {
 // --- MODULE PROGRAMME (VERSION AUTO-MASSAGE) ---
 const programs = {
     stress: {
-        title: "Apaisement Nerveux",
+        title: "Apaisement & Anti-Stress",
         advice: "Le stress bloque souvent le diaphragme. Apprenez à libérer votre plexus solaire pour retrouver votre souffle.",
         routines: ["10 min de cohérence cardiaque matin/soir", "Tisane mélisse avant dormir", "Éloignement des écrans 30min avant le massage"],
         selfMassage: [
@@ -117,7 +117,7 @@ const programs = {
         ]
     },
     sleep: {
-        title: "Sommeil Réparateur",
+        title: "Sommeil & Récupération",
         advice: "Le corps a besoin d'ancrage pour s'endormir. Massez les zones liées à la détente profonde.",
         routines: ["Pas d'écran après 21h30", "Chambre à 18°C", "Respiration alternée (Pranayama) avant de fermer les yeux"],
         selfMassage: [
@@ -127,7 +127,7 @@ const programs = {
         ]
     },
     digestion: {
-        title: "Confort Digestif",
+        title: "Digestion & Ventre",
         advice: "La digestion commence par la détente. Massez les zones réflexes de l'estomac et des intestins.",
         routines: ["Eau tiède au citron le matin", "Mâcher 20 fois chaque bouchée", "Marche calme de 10 min après repas"],
         selfMassage: [
@@ -148,28 +148,34 @@ window.setProgramTab = function(id) {
         content.innerHTML = `
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in">
                 <div class="space-y-6">
-                    <h3 class="text-2xl font-['Cormorant_Garamond'] text-[#8da399] font-bold">${p.title}</h3>
+                    <div class="bg-[#8da399]/10 p-4 rounded-xl inline-flex items-center gap-2 text-[#8da399]">
+                         <i data-lucide="sparkles"></i>
+                         <span class="font-bold text-sm">Programme ${p.title}</span>
+                    </div>
                     <p class="text-gray-500 italic border-l-4 border-[#f5f1e9] pl-4 text-sm leading-relaxed">${p.advice}</p>
                     <div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Hygiène de vie</h4>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Hygiène de vie conseillée</h4>
                         <ul class="space-y-2">
                             ${p.routines.map(r => `<li class="flex items-center gap-3 text-sm bg-gray-50 p-3 rounded-lg"><i data-lucide="check" class="text-[#8da399]" size="16"></i> ${r}</li>`).join('')}
                         </ul>
                     </div>
                 </div>
-                <div class="bg-[#f5f1e9]/30 rounded-2xl p-6 border border-[#f5f1e9]">
+                <div class="bg-white rounded-2xl p-6 shadow-md border-t-4 border-[#8da399]">
                     <h3 class="text-xl font-['Cormorant_Garamond'] text-[#8da399] font-bold mb-6 flex items-center gap-2">
-                        <i data-lucide="hand"></i> Auto-massage Réflexo
+                        <i data-lucide="hand"></i> Gestes d'Auto-massage
                     </h3>
                     <div class="space-y-6">
                         ${p.selfMassage.map(m => `
-                            <div class="bg-white p-4 rounded-xl shadow-sm border border-white">
-                                <h4 class="font-bold text-[#8da399] text-sm mb-1">${m.point}</h4>
+                            <div class="p-4 rounded-xl bg-[#faf9f6] border border-gray-100 hover:border-[#8da399]/30 transition-colors">
+                                <h4 class="font-bold text-[#8da399] text-sm mb-1 uppercase tracking-tight">${m.point}</h4>
                                 <p class="text-xs text-gray-500 leading-relaxed">${m.action}</p>
                             </div>
                         `).join('')}
                     </div>
-                    <p class="mt-6 text-[10px] text-center text-gray-400 italic">Effectuez ces gestes sur les deux côtés (sauf indication contraire).</p>
+                    <div class="mt-6 flex items-start gap-2 p-3 bg-amber-50 rounded-lg">
+                        <i data-lucide="info" class="text-amber-500 shrink-0" size="14"></i>
+                        <p class="text-[10px] text-amber-700 leading-tight">Effectuez ces pressions sur les deux pieds ou mains. Respirez calmement pendant le massage.</p>
+                    </div>
                 </div>
             </div>
         `;
