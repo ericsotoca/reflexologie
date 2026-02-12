@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { NAV_ITEMS } from '../constants';
-import { ModuleType } from '../types';
+import { NAV_ITEMS } from '../constants.tsx';
+import { ModuleType } from '../types.ts';
 
 interface LayoutProps {
   children: React.ReactNode;

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App from './App.tsx';
 
 const startApp = () => {
   const container = document.getElementById('root');
@@ -12,11 +12,10 @@ const startApp = () => {
         <App />
       </React.StrictMode>
     );
-    console.log("Espace Équilibre : Chargé !");
+    console.log("Espace Équilibre : Application lancée.");
   }
 };
 
-// Babel Standalone peut parfois charger le script après le DOM
 if (document.readyState === 'complete') {
   startApp();
 } else {

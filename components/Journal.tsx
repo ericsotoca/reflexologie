@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { storage } from '../services/storageService';
-import { JournalEntry } from '../types';
+import { storage } from '../services/storageService.ts';
+import { JournalEntry } from '../types.ts';
 import { Save, History } from 'lucide-react';
 
 const Journal: React.FC = () => {

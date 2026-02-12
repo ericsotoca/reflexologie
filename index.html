@@ -22,7 +22,7 @@
         .bg-beige { background-color: #f5f1e9; }
         
         #root:empty::before {
-            content: "Préparation de votre espace bien-être...";
+            content: "Initialisation de votre espace bien-être...";
             display: flex; justify-content: center; align-items: center;
             height: 100vh; color: #8da399; font-size: 1.2rem;
         }
@@ -45,20 +45,15 @@
 <body>
     <div id="root"></div>
 
-    <!-- On charge index.tsx via l'attribut src de Babel, ce qui force Babel à fetch() le fichier 
-         au lieu de laisser le navigateur essayer de l'importer comme un module JS natif. -->
-    <script type="text/babel" data-presets="react,typescript" data-type="module" src="index.tsx"></script>
+    <!-- On retire data-type="module" car sur GitHub Pages, cela force le navigateur à essayer
+         de charger index.tsx comme un module natif, ce qui échoue à cause du type MIME.
+         Babel s'occupera de fetch le fichier lui-même. -->
+    <script type="text/babel" data-presets="react,typescript" src="index.tsx"></script>
 
     <script>
-        // Diagnostic en cas d'échec
-        window.onerror = function(msg, url, line) {
-            console.error("Erreur critique :", msg, "à", url, ":", line);
+        window.onerror = function(msg) {
             if (msg.includes('MIME')) {
-                document.getElementById('root').innerHTML = `
-                    <div style="padding:40px; text-align:center; color:#8da399;">
-                        <h2>Problème de configuration serveur</h2>
-                        <p>Le fichier .tsx est mal interprété par l'hébergeur.</p>
-                    </div>`;
+                console.warn("Tentative de contournement de l'erreur MIME...");
             }
         };
     </script>

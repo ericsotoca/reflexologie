@@ -1,13 +1,13 @@
 
 import React, { useState } from 'react';
-import { ModuleType } from './types';
-import Layout from './components/Layout';
-import Home from './components/Home';
-import Journal from './components/Journal';
-import Program from './components/Program';
-import ScoreAssessment from './components/ScoreAssessment';
-import SessionFollowUp from './components/SessionFollowUp';
-import BreathingRoom from './components/BreathingRoom';
+import { ModuleType } from './types.ts';
+import Layout from './components/Layout.tsx';
+import Home from './components/Home.tsx';
+import Journal from './components/Journal.tsx';
+import Program from './components/Program.tsx';
+import ScoreAssessment from './components/ScoreAssessment.tsx';
+import SessionFollowUp from './components/SessionFollowUp.tsx';
+import BreathingRoom from './components/BreathingRoom.tsx';
 
 const App: React.FC = () => {
   const [activeModule, setActiveModule] = useState<ModuleType>('home');
