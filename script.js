@@ -104,36 +104,48 @@ function renderJournalChart() {
     });
 }
 
-// --- MODULE PROGRAMME (VERSION AUTO-MASSAGE) ---
+// --- MODULE PROGRAMME (VERSION PROTOCOLE D'INTERVENTION) ---
 const programs = {
     stress: {
         title: "Apaisement & Anti-Stress",
-        advice: "Le stress bloque souvent le diaphragme. Apprenez à libérer votre plexus solaire pour retrouver votre souffle.",
-        routines: ["10 min de cohérence cardiaque matin/soir", "Tisane mélisse avant dormir", "Éloignement des écrans 30min avant le massage"],
+        advice: "Le stress bloque souvent le diaphragme. Ce protocole vise à libérer la respiration.",
+        protocol: [
+            { step: "Ouverture", desc: "Installez-vous confortablement. Pratiquez 3 respirations abdominales amples pour signaler au corps le début de la séance." },
+            { step: "Détente Diaphragme", desc: "Exercez des pressions glissées lentes sous les têtes des métatarsiens (ligne du diaphragme) de l'intérieur vers l'extérieur." },
+            { step: "Point d'Ancrage", action: "Terminez par une pression maintenue de 2 minutes sur le plexus solaire en expirant longuement." }
+        ],
         selfMassage: [
-            { point: "Plexus Solaire (Pied)", action: "Au centre de la voûte plantaire, juste sous les coussinets. Exercez une pression circulaire douce avec le pouce pendant 2 minutes en respirant profondément." },
-            { point: "Ligne du Diaphragme", action: "Suivez la ligne horizontale sous les coussinets des pieds. Massez de l'intérieur vers l'extérieur pour libérer les tensions respiratoires." },
-            { point: "Point de Sérénité (Main)", action: "Au centre de la paume. Pressez fermement pendant 1 minute lors d'un pic de stress." }
+            { point: "Plexus Solaire", action: "Centre de la voûte plantaire. Pression circulaire douce." },
+            { point: "Glandes Surrénales", action: "Légèrement au-dessus du plexus, côté interne. Pression tonique." },
+            { point: "Ligne de Colonne", action: "Bord interne du pied, du gros orteil au talon." }
         ]
     },
     sleep: {
         title: "Sommeil & Récupération",
-        advice: "Le corps a besoin d'ancrage pour s'endormir. Massez les zones liées à la détente profonde.",
-        routines: ["Pas d'écran après 21h30", "Chambre à 18°C", "Respiration alternée (Pranayama) avant de fermer les yeux"],
+        advice: "L'objectif est de descendre l'énergie de la tête vers les pieds pour favoriser l'endormissement.",
+        protocol: [
+            { step: "Calme Mental", desc: "Massez lentement chaque orteil (représentation de la tête) pour apaiser le flux de pensées." },
+            { step: "Sédation", desc: "Effectuez des mouvements de 'chenille' très lents le long de la voûte plantaire pour relaxer le système nerveux." },
+            { step: "Clôture", desc: "Enveloppez vos talons avec vos mains pendant 1 minute pour favoriser l'ancrage et la sécurité." }
+        ],
         selfMassage: [
-            { point: "L'Ancrage du Talon", action: "Massez vigoureusement tout le talon. C'est la zone du bassin et de l'ancrage, idéale pour calmer le mental envahissant." },
-            { point: "Glande Pinéale (Gros orteil)", action: "Massez le centre de la pulpe du gros orteil. Cela favorise la régulation de la mélatonine." },
-            { point: "Zone de la Colonne Vertébrale", action: "Sur le bord interne du pied, massez de la base du gros orteil jusqu'au talon pour détendre le système nerveux central." }
+            { point: "Glande Pinéale", action: "Centre du gros orteil. Pression douce mais profonde." },
+            { point: "Zone du Bassin", action: "L'ensemble du talon. Massage vigoureux." },
+            { point: "Zone du Coeur", action: "Sous le coussinet du pied gauche. Pression apaisante." }
         ]
     },
     digestion: {
         title: "Digestion & Ventre",
-        advice: "La digestion commence par la détente. Massez les zones réflexes de l'estomac et des intestins.",
-        routines: ["Eau tiède au citron le matin", "Mâcher 20 fois chaque bouchée", "Marche calme de 10 min après repas"],
+        advice: "Ce protocole stimule le péristaltisme et aide à débloquer les tensions viscérales.",
+        protocol: [
+            { step: "Éveil", desc: "Frictionnez vos mains pour les chauffer. Massez le centre du pied pour réveiller les zones organiques." },
+            { step: "Circuit Digestif", desc: "Suivez le trajet du colon (pied droit puis pied gauche) en exerçant des pressions glissées fermes." },
+            { step: "Libération", desc: "Massez la zone de l'estomac (pied gauche) en cercles lents pour soulager les ballonnements." }
+        ],
         selfMassage: [
-            { point: "Zone Estomac (Pied Gauche)", action: "Située sous le coussinet du gros orteil sur le pied gauche. Effectuez des mouvements circulaires dans le sens des aiguilles d'une montre." },
-            { point: "Intestins (Voûte Plantaire)", action: "Massez toute la partie creuse de la voûte plantaire avec le poing fermé pour stimuler le péristaltisme." },
-            { point: "Point Digestion (Main)", action: "Dans le creux entre le pouce et l'index. Massez pour soulager les ballonnements (attention : éviter en cas de grossesse)." }
+            { point: "Colon Ascendant", action: "Pied droit, bord externe, du talon vers le haut." },
+            { point: "Estomac", action: "Pied gauche, sous le coussinet interne." },
+            { point: "Intestin Grêle", action: "Zone centrale du creux du pied, massage global." }
         ]
     }
 };
@@ -147,34 +159,52 @@ window.setProgramTab = function(id) {
     if (content) {
         content.innerHTML = `
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in">
+                <!-- Colonne 1 : Protocole d'intervention -->
                 <div class="space-y-6">
                     <div class="bg-[#8da399]/10 p-4 rounded-xl inline-flex items-center gap-2 text-[#8da399]">
-                         <i data-lucide="sparkles"></i>
-                         <span class="font-bold text-sm">Programme ${p.title}</span>
+                         <i data-lucide="clipboard-check"></i>
+                         <span class="font-bold text-sm">Protocole : ${p.title}</span>
                     </div>
-                    <p class="text-gray-500 italic border-l-4 border-[#f5f1e9] pl-4 text-sm leading-relaxed">${p.advice}</p>
-                    <div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Hygiène de vie conseillée</h4>
-                        <ul class="space-y-2">
-                            ${p.routines.map(r => `<li class="flex items-center gap-3 text-sm bg-gray-50 p-3 rounded-lg"><i data-lucide="check" class="text-[#8da399]" size="16"></i> ${r}</li>`).join('')}
-                        </ul>
+                    
+                    <div class="space-y-4">
+                        ${p.protocol.map((step, i) => `
+                            <div class="flex gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-sm">
+                                <div class="flex-shrink-0 w-8 h-8 bg-[#8da399] text-white rounded-full flex items-center justify-center font-bold text-sm">
+                                    ${i+1}
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm">${step.step}</h4>
+                                    <p class="text-xs text-gray-500 leading-relaxed mt-1">${step.desc || step.action}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="p-4 bg-[#f5f1e9]/50 rounded-xl">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase mb-2">Conseil du praticien</h4>
+                        <p class="text-xs text-gray-600 italic leading-relaxed">"${p.advice}"</p>
                     </div>
                 </div>
+
+                <!-- Colonne 2 : Points de massage -->
                 <div class="bg-white rounded-2xl p-6 shadow-md border-t-4 border-[#8da399]">
                     <h3 class="text-xl font-['Cormorant_Garamond'] text-[#8da399] font-bold mb-6 flex items-center gap-2">
-                        <i data-lucide="hand"></i> Gestes d'Auto-massage
+                        <i data-lucide="hand"></i> Points Réflexes Clés
                     </h3>
-                    <div class="space-y-6">
+                    <div class="space-y-4">
                         ${p.selfMassage.map(m => `
-                            <div class="p-4 rounded-xl bg-[#faf9f6] border border-gray-100 hover:border-[#8da399]/30 transition-colors">
-                                <h4 class="font-bold text-[#8da399] text-sm mb-1 uppercase tracking-tight">${m.point}</h4>
-                                <p class="text-xs text-gray-500 leading-relaxed">${m.action}</p>
+                            <div class="p-4 rounded-xl bg-[#faf9f6] border border-gray-50 hover:border-[#8da399]/20 transition-all group">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="font-bold text-gray-700 text-xs uppercase tracking-tight">${m.point}</h4>
+                                    <i data-lucide="map-pin" class="text-gray-300 group-hover:text-[#8da399] transition-colors" size="14"></i>
+                                </div>
+                                <p class="text-[11px] text-gray-500 leading-relaxed">${m.action}</p>
                             </div>
                         `).join('')}
                     </div>
                     <div class="mt-6 flex items-start gap-2 p-3 bg-amber-50 rounded-lg">
-                        <i data-lucide="info" class="text-amber-500 shrink-0" size="14"></i>
-                        <p class="text-[10px] text-amber-700 leading-tight">Effectuez ces pressions sur les deux pieds ou mains. Respirez calmement pendant le massage.</p>
+                        <i data-lucide="shield-check" class="text-amber-500 shrink-0" size="14"></i>
+                        <p class="text-[10px] text-amber-700 leading-tight">Effectuez ces gestes avec calme. Ne forcez jamais si une zone est trop douloureuse.</p>
                     </div>
                 </div>
             </div>
