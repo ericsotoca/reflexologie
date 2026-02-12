@@ -1,0 +1,7 @@
+{
+  "name": "Espace Équilibre",
+  "description": "Une application de bien-être complète pour le suivi quotidien, les exercices de respiration et l'accompagnement post-réflexologie.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
