@@ -3,31 +3,30 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-console.log("Initialisation de l'application Espace Équilibre...");
+console.log("Espace Équilibre : Démarrage du moteur React...");
 
-const renderApp = () => {
-  const rootElement = document.getElementById('root');
-  if (!rootElement) {
-    console.error("Impossible de trouver l'élément racine #root");
-    return;
-  }
-
-  try {
-    const root = ReactDOM.createRoot(rootElement);
-    root.render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    );
-    console.log("Application montée avec succès.");
-  } catch (error) {
-    console.error("Erreur lors du rendu React:", error);
+const init = () => {
+  const container = document.getElementById('root');
+  if (container) {
+    try {
+      const root = ReactDOM.createRoot(container);
+      root.render(
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      );
+      console.log("Espace Équilibre : Application chargée avec succès.");
+    } catch (err) {
+      console.error("Espace Équilibre : Erreur lors du rendu :", err);
+    }
+  } else {
+    console.error("Espace Équilibre : Élément #root introuvable.");
   }
 };
 
-// S'assurer que le DOM est chargé
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', renderApp);
+// Exécution immédiate ou après chargement du DOM
+if (document.readyState === 'complete') {
+  init();
 } else {
-  renderApp();
+  window.addEventListener('load', init);
 }
