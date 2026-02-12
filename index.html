@@ -13,6 +13,8 @@
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #faf9f6;
+            margin: 0;
+            padding: 0;
         }
         h1, h2, h3, .font-serif {
             font-family: 'Cormorant+Garamond', serif;
@@ -22,24 +24,59 @@
         .border-sage { border-color: #8da399; }
         .bg-beige { background-color: #f5f1e9; }
         
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Custom scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #8da399; border-radius: 10px; }
+        
+        #root:empty::before {
+            content: "Chargement de l'Espace Équilibre...";
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #8da399;
+            font-family: 'Cormorant+Garamond', serif;
+            font-size: 1.5rem;
+        }
     </style>
-<script type="importmap">
+    <script type="importmap">
 {
   "imports": {
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
-    "recharts": "https://esm.sh/recharts@^3.7.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom": "https://esm.sh/react-dom@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0",
+    "recharts": "https://esm.sh/recharts@2.13.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
   }
 }
 </script>
 </head>
 <body>
     <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
+    <script>
+        // Capturer les erreurs de chargement de module
+        window.addEventListener('error', function(e) {
+            console.error('Erreur globale détectée:', e.message);
+            if (e.message.includes('import')) {
+                document.getElementById('root').innerHTML = 
+                    '<div style="padding: 20px; text-align: center; color: #8da399; font-family: sans-serif;">' +
+                    '<h2>Oups ! Un problème de chargement est survenu.</h2>' +
+                    '<p>Veuillez rafraîchir la page ou vérifier votre connexion internet.</p>' +
+                    '</div>';
+            }
+        }, true);
+    </script>
 </body>
 </html>
