@@ -3,30 +3,22 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-console.log("Espace Équilibre : Démarrage du moteur React...");
-
-const init = () => {
+const startApp = () => {
   const container = document.getElementById('root');
   if (container) {
-    try {
-      const root = ReactDOM.createRoot(container);
-      root.render(
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
-      );
-      console.log("Espace Équilibre : Application chargée avec succès.");
-    } catch (err) {
-      console.error("Espace Équilibre : Erreur lors du rendu :", err);
-    }
-  } else {
-    console.error("Espace Équilibre : Élément #root introuvable.");
+    const root = ReactDOM.createRoot(container);
+    root.render(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    );
+    console.log("Espace Équilibre : Chargé !");
   }
 };
 
-// Exécution immédiate ou après chargement du DOM
+// Babel Standalone peut parfois charger le script après le DOM
 if (document.readyState === 'complete') {
-  init();
+  startApp();
 } else {
-  window.addEventListener('load', init);
+  window.addEventListener('load', startApp);
 }

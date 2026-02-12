@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espace Équilibre - Votre compagnon Bien-être</title>
     
-    <!-- Bibliothèques externes -->
+    <!-- Bibliothèques -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
@@ -15,37 +15,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #faf9f6;
-            margin: 0;
-            padding: 0;
-        }
-        h1, h2, h3, .font-serif {
-            font-family: 'Cormorant+Garamond', serif;
-        }
+        body { font-family: 'Montserrat', sans-serif; background-color: #faf9f6; margin: 0; }
+        h1, h2, h3, .font-serif { font-family: 'Cormorant+Garamond', serif; }
         .bg-sage { background-color: #8da399; }
         .text-sage { color: #8da399; }
-        .border-sage { border-color: #8da399; }
         .bg-beige { background-color: #f5f1e9; }
         
-        .animate-fadeIn {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         #root:empty::before {
-            content: "Initialisation de votre espace bien-être...";
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #8da399;
-            font-family: 'Cormorant+Garamond', serif;
-            font-size: 1.5rem;
+            content: "Préparation de votre espace bien-être...";
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; color: #8da399; font-size: 1.2rem;
         }
     </style>
 
@@ -66,25 +45,22 @@
 <body>
     <div id="root"></div>
 
-    <!-- Configuration Babel pour le support TSX direct -->
-    <script type="text/babel" data-type="module" data-presets="typescript,react">
-        import './index.tsx';
-    </script>
+    <!-- On charge index.tsx via l'attribut src de Babel, ce qui force Babel à fetch() le fichier 
+         au lieu de laisser le navigateur essayer de l'importer comme un module JS natif. -->
+    <script type="text/babel" data-presets="react,typescript" data-type="module" src="index.tsx"></script>
 
     <script>
-        // Gestionnaire d'erreurs pour aider au diagnostic
-        window.addEventListener('error', function(e) {
-            console.error('Erreur détectée:', e.message);
-            if (e.message.includes('import')) {
-                const root = document.getElementById('root');
-                if (root) {
-                    root.innerHTML = `<div style="padding:40px; text-align:center; color:#8da399;">
-                        <h2>Une erreur de connexion est survenue</h2>
-                        <p>Veuillez rafraîchir la page (F5).</p>
+        // Diagnostic en cas d'échec
+        window.onerror = function(msg, url, line) {
+            console.error("Erreur critique :", msg, "à", url, ":", line);
+            if (msg.includes('MIME')) {
+                document.getElementById('root').innerHTML = `
+                    <div style="padding:40px; text-align:center; color:#8da399;">
+                        <h2>Problème de configuration serveur</h2>
+                        <p>Le fichier .tsx est mal interprété par l'hébergeur.</p>
                     </div>`;
-                }
             }
-        });
+        };
     </script>
 </body>
 </html>
