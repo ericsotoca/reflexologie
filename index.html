@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espace Équilibre - Bien-être & Réflexologie</title>
-    <!-- Bibliothèques externes -->
+    <!-- Bibliothèques externes via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -17,9 +17,8 @@
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/",
     "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
     "recharts": "https://esm.sh/recharts@^3.7.0"
   }
 }
@@ -27,14 +26,14 @@
 </head>
 <body class="bg-[#faf9f6] text-gray-800 font-['Montserrat']">
 
-    <!-- Menu Latéral (Desktop) -->
+    <!-- Sidebar Desktop -->
     <nav id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-white border-r border-gray-100 p-6 hidden md:flex flex-col z-40">
         <div class="mb-10">
             <h1 class="text-3xl font-['Cormorant_Garamond'] text-[#8da399] font-bold">Espace Équilibre</h1>
             <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Reflexologie & Harmonie</p>
         </div>
         <ul class="space-y-2 flex-1">
-            <li><button onclick="showSection('home')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all" data-section="home"><i data-lucide="home"></i> Accueil</button></li>
+            <li><button onclick="showSection('home')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all active-nav" data-section="home"><i data-lucide="home"></i> Accueil</button></li>
             <li><button onclick="showSection('journal')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all" data-section="journal"><i data-lucide="book-open"></i> Journal</button></li>
             <li><button onclick="showSection('program')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all" data-section="program"><i data-lucide="sparkles"></i> Programme</button></li>
             <li><button onclick="showSection('score')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all" data-section="score"><i data-lucide="activity"></i> Mon Score</button></li>
@@ -44,16 +43,16 @@
         <div class="text-[10px] text-gray-300 text-center">© 2024 Espace Équilibre</div>
     </nav>
 
-    <!-- Menu Bas (Mobile) -->
+    <!-- Bottom Nav Mobile -->
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex md:hidden justify-around p-2 z-50 shadow-lg">
-        <button onclick="showSection('home')" class="flex flex-col items-center p-2 text-gray-400" data-mob="home"><i data-lucide="home" size="20"></i><span class="text-[9px] mt-1">Accueil</span></button>
+        <button onclick="showSection('home')" class="flex flex-col items-center p-2 text-[#8da399]" data-mob="home"><i data-lucide="home" size="20"></i><span class="text-[9px] mt-1">Accueil</span></button>
         <button onclick="showSection('journal')" class="flex flex-col items-center p-2 text-gray-400" data-mob="journal"><i data-lucide="book-open" size="20"></i><span class="text-[9px] mt-1">Journal</span></button>
         <button onclick="showSection('program')" class="flex flex-col items-center p-2 text-gray-400" data-mob="program"><i data-lucide="sparkles" size="20"></i><span class="text-[9px] mt-1">Prog.</span></button>
         <button onclick="showSection('score')" class="flex flex-col items-center p-2 text-gray-400" data-mob="score"><i data-lucide="activity" size="20"></i><span class="text-[9px] mt-1">Score</span></button>
         <button onclick="showSection('breathing')" class="flex flex-col items-center p-2 text-gray-400" data-mob="breathing"><i data-lucide="wind" size="20"></i><span class="text-[9px] mt-1">Zen</span></button>
     </nav>
 
-    <!-- Contenu Principal -->
+    <!-- Main Content -->
     <main class="md:ml-64 p-4 md:p-10 pb-24 md:pb-10">
         
         <!-- SECTION : ACCUEIL -->
@@ -73,7 +72,7 @@
         <section id="section-journal" class="content-section hidden">
             <h2 class="text-3xl font-['Cormorant_Garamond'] text-[#8da399] mb-6 font-bold">Journal Bien-Être</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-50">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <h3 class="font-bold mb-4">Aujourd'hui</h3>
                     <div class="space-y-4">
                         <input type="date" id="journal-date" class="w-full p-2 bg-[#f5f1e9]/50 border-0 rounded-lg outline-none">
@@ -94,12 +93,14 @@
                             <input type="range" id="input-mood" min="0" max="10" value="5" class="w-full accent-[#8da399]" oninput="updateVal('mood')">
                         </div>
                         <textarea id="journal-notes" placeholder="Notes du jour..." class="w-full p-3 bg-[#f5f1e9]/50 border-0 rounded-lg outline-none text-sm h-24"></textarea>
-                        <button onclick="saveJournal()" class="w-full bg-[#8da399] text-white py-3 rounded-xl font-bold shadow-md">Enregistrer</button>
+                        <button onclick="saveJournal()" class="w-full bg-[#8da399] text-white py-3 rounded-xl font-bold shadow-md hover:bg-[#7a8e84]">Enregistrer</button>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-50 h-[400px]">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-[400px]">
                     <h3 class="font-bold mb-4">Évolution</h3>
-                    <canvas id="journalChart"></canvas>
+                    <div class="relative h-full pb-10">
+                        <canvas id="journalChart"></canvas>
+                    </div>
                 </div>
             </div>
         </section>
@@ -107,9 +108,9 @@
         <!-- SECTION : PROGRAMME -->
         <section id="section-program" class="content-section hidden">
             <h2 class="text-3xl font-['Cormorant_Garamond'] text-[#8da399] mb-6 font-bold">Mon Programme</h2>
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-50">
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
                 <div class="flex border-b border-gray-50">
-                    <button onclick="setProgramTab('stress')" class="prog-tab flex-1 py-4 text-sm font-bold active" data-tab="stress">Stress</button>
+                    <button onclick="setProgramTab('stress')" class="prog-tab flex-1 py-4 text-sm font-bold active-tab" data-tab="stress">Stress</button>
                     <button onclick="setProgramTab('sleep')" class="prog-tab flex-1 py-4 text-sm font-bold" data-tab="sleep">Sommeil</button>
                     <button onclick="setProgramTab('digestion')" class="prog-tab flex-1 py-4 text-sm font-bold" data-tab="digestion">Digestion</button>
                 </div>
@@ -120,12 +121,12 @@
         <!-- SECTION : SCORE -->
         <section id="section-score" class="content-section hidden">
             <h2 class="text-3xl font-['Cormorant_Garamond'] text-[#8da399] mb-6 font-bold">Score d'Équilibre</h2>
-            <div id="score-quiz" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-50 max-w-2xl mx-auto">
+            <div id="score-quiz" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 max-w-2xl mx-auto">
                 <p class="text-sm text-gray-400 mb-8 italic text-center">Répondez sincèrement de 1 (Jamais) à 5 (Toujours).</p>
                 <div id="quiz-questions" class="space-y-6"></div>
-                <button onclick="calculateScore()" class="mt-10 w-full bg-[#8da399] text-white py-4 rounded-xl font-bold text-xl shadow-lg">Calculer mon score</button>
+                <button onclick="calculateScore()" class="mt-10 w-full bg-[#8da399] text-white py-4 rounded-xl font-bold text-xl shadow-lg hover:bg-[#7a8e84]">Calculer mon score</button>
             </div>
-            <div id="score-result" class="hidden bg-white p-10 rounded-2xl shadow-sm border border-gray-50 text-center max-w-2xl mx-auto animate-in">
+            <div id="score-result" class="hidden bg-white p-10 rounded-2xl shadow-sm border border-gray-100 text-center max-w-2xl mx-auto animate-in">
                 <div class="text-6xl font-['Cormorant_Garamond'] text-[#8da399] mb-2" id="final-score">0</div>
                 <div class="text-gray-400 text-xs mb-6">/ 75</div>
                 <h3 class="text-2xl font-bold mb-4" id="score-label">---</h3>
@@ -138,15 +139,15 @@
         <section id="section-followup" class="content-section hidden">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-3xl font-['Cormorant_Garamond'] text-[#8da399] font-bold">Suivi Post-Séance</h2>
-                <button onclick="toggleSessionForm()" class="bg-[#8da399] text-white p-3 rounded-full shadow-lg"><i data-lucide="plus"></i></button>
+                <button onclick="toggleSessionForm()" class="bg-[#8da399] text-white p-3 rounded-full shadow-lg hover:scale-110 transition-transform"><i data-lucide="plus"></i></button>
             </div>
             <div id="session-form" class="hidden bg-white p-6 rounded-2xl shadow-lg border border-[#8da399]/20 mb-8 max-w-md mx-auto">
                 <h3 class="font-bold mb-4">Nouvelle séance</h3>
                 <div class="space-y-4">
-                    <input type="date" id="sess-date" class="w-full p-3 bg-[#f5f1e9]/50 rounded-xl outline-none">
-                    <input type="text" id="sess-obj" placeholder="Objectif de la séance" class="w-full p-3 bg-[#f5f1e9]/50 rounded-xl outline-none">
-                    <textarea id="sess-adv" placeholder="Conseils donnés..." class="w-full p-3 bg-[#f5f1e9]/50 rounded-xl outline-none h-24"></textarea>
-                    <button onclick="addSession()" class="w-full bg-[#8da399] text-white py-3 rounded-xl font-bold">Enregistrer</button>
+                    <input type="date" id="sess-date" class="w-full p-3 bg-[#f5f1e9]/50 rounded-xl outline-none border border-gray-50">
+                    <input type="text" id="sess-obj" placeholder="Objectif de la séance" class="w-full p-3 bg-[#f5f1e9]/50 rounded-xl outline-none border border-gray-50">
+                    <textarea id="sess-adv" placeholder="Conseils donnés..." class="w-full p-3 bg-[#f5f1e9]/50 rounded-xl outline-none h-24 border border-gray-50"></textarea>
+                    <button onclick="addSession()" class="w-full bg-[#8da399] text-white py-3 rounded-xl font-bold hover:bg-[#7a8e84]">Enregistrer</button>
                 </div>
             </div>
             <div id="sessions-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
@@ -159,7 +160,7 @@
                 <p class="text-gray-400 text-sm mb-12 italic">Inspirer 5s / Expirer 5s</p>
                 <div class="relative flex items-center justify-center mb-16">
                     <div id="ripple" class="absolute w-48 h-48 bg-[#8da399] rounded-full opacity-0 scale-100"></div>
-                    <div id="breath-circle" class="relative z-10 w-48 h-48 rounded-full bg-white shadow-2xl flex flex-col items-center justify-center border-4 border-[#f5f1e9] transition-all duration-[5000ms] ease-in-out">
+                    <div id="breath-circle" class="relative z-10 w-48 h-48 rounded-full bg-white shadow-2xl flex flex-col items-center justify-center border-4 border-[#f5f1e9] transition-all duration-500 ease-in-out">
                         <span id="breath-text" class="text-[#8da399] font-bold text-xl">Prêt ?</span>
                         <span id="breath-timer" class="text-3xl font-light text-[#8da399] hidden">5</span>
                     </div>
@@ -169,7 +170,7 @@
                         <span id="cycle-count" class="block text-2xl font-bold text-[#8da399]">0</span>
                         <span class="text-[10px] text-gray-400 uppercase tracking-widest">Cycles</span>
                     </div>
-                    <button id="breath-btn" onclick="toggleBreathing()" class="w-20 h-20 bg-[#8da399] text-white rounded-full flex items-center justify-center shadow-xl shadow-[#8da399]/30">
+                    <button id="breath-btn" onclick="toggleBreathing()" class="w-20 h-20 bg-[#8da399] text-white rounded-full flex items-center justify-center shadow-xl shadow-[#8da399]/30 hover:scale-105 transition-all">
                         <i data-lucide="play" id="breath-icon"></i>
                     </button>
                     <div class="text-center">
@@ -179,14 +180,14 @@
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-gray-100 flex gap-3 text-left">
                     <i data-lucide="info" class="text-[#8da399] shrink-0" size="18"></i>
-                    <p class="text-[11px] text-gray-400 leading-relaxed italic">Pratiquez 5 minutes, 3 fois par jour pour réduire durablement votre stress.</p>
+                    <p class="text-[11px] text-gray-500 leading-relaxed italic">La cohérence cardiaque réduit le stress et l'anxiété. Pratiquez 5 minutes, 3 fois par jour.</p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Fichiers locaux -->
+    <!-- Chargement du script après le DOM -->
     <script src="script.js"></script>
 </body>
 </html>
