@@ -1,0 +1,73 @@
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Sidebar styles */
+.nav-btn {
+    color: #94a3b8;
+}
+
+.nav-btn:hover {
+    color: #8da399;
+    background-color: #f5f1e9;
+}
+
+.nav-btn.active {
+    background-color: #8da399;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgb(141 163 153 / 0.1);
+}
+
+/* Tabs */
+.prog-tab {
+    color: #94a3b8;
+    background: transparent;
+    transition: all 0.3s;
+}
+
+.prog-tab.active {
+    color: #8da399;
+    background: white;
+}
+
+/* Breathing Circle States */
+.inhaling {
+    transform: scale(1.35);
+    background-color: #f5f1e9 !important;
+}
+
+.exhaling {
+    transform: scale(1.0);
+    background-color: white !important;
+}
+
+#ripple.active {
+    animation: rippleAnim 10s infinite;
+}
+
+@keyframes rippleAnim {
+    0%, 100% { opacity: 0.1; transform: scale(1); }
+    50% { opacity: 0.05; transform: scale(1.8); }
+}
+
+/* Chart container tweak */
+canvas {
+    max-height: 300px !important;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Hide scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}

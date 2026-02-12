@@ -4,58 +4,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace Équilibre - Votre compagnon Bien-être</title>
-    
-    <!-- Bibliothèques -->
+    <title>Espace Équilibre - Réflexologie & Bien-être</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    
-    <style>
-        body { font-family: 'Montserrat', sans-serif; background-color: #faf9f6; margin: 0; }
-        h1, h2, h3, .font-serif { font-family: 'Cormorant+Garamond', serif; }
-        .bg-sage { background-color: #8da399; }
-        .text-sage { color: #8da399; }
-        .bg-beige { background-color: #f5f1e9; }
-        
-        #root:empty::before {
-            content: "Initialisation de votre espace bien-être...";
-            display: flex; justify-content: center; align-items: center;
-            height: 100vh; color: #8da399; font-size: 1.2rem;
-        }
-    </style>
-
-    <script type="importmap">
+<script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@18.3.1",
-    "react-dom": "https://esm.sh/react-dom@18.3.1",
-    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-    "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@18.3.1",
-    "recharts": "https://esm.sh/recharts@2.13.3?deps=react@18.3.1,react-dom@18.3.1",
+    "react": "https://esm.sh/react@^19.2.4",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "recharts": "https://esm.sh/recharts@^3.7.0"
   }
 }
 </script>
 </head>
-<body>
-    <div id="root"></div>
+<body class="bg-[#faf9f6] text-gray-800 font-['Montserrat']">
 
-    <!-- Chargement via Babel pour contourner les restrictions MIME de GitHub Pages -->
-    <script type="text/babel" data-presets="react,typescript" src="index.tsx"></script>
+    <!-- Navigation Latérale (Desktop) -->
+    <nav id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-white border-r border-gray-100 p-6 hidden md:flex flex-col z-40">
+        <div class="mb-10">
+            <h1 class="text-3xl font-['Cormorant_Garamond'] text-[#8da399] font-bold">Espace Équilibre</h1>
+            <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Reflexologie & Harmonie</p>
+        </div>
+        <ul class="space-y-2 flex-1">
+            <li><button onclick="showSection('home')" class="nav-btn active w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all" data-section="home"><i data-lucide="home"></i> Accueil</button></li>
+            <li><button onclick="showSection('journal')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all" data-section="journal"><i data-lucide="book-open"></i> Journal</button></li>
+            <li><button onclick="showSection('program')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all" data-section="program"><i data-lucide="sparkles"></i> Programme</button></li>
+            <li><button onclick="showSection('score')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all" data-section="score"><i data-lucide="activity"></i> Mon Score</button></li>
+            <li><button onclick="showSection('followup')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all" data-section="followup"><i data-lucide="message-square"></i> Suivi Séances</button></li>
+            <li><button onclick="showSection('breathing')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all" data-section="breathing"><i data-lucide="wind"></i> Respiration</button></li>
+        </ul>
+        <div class="text-[10px] text-gray-300 text-center">© 2024 Espace Équilibre</div>
+    </nav>
 
+    <!-- Navigation Mobile (Bottom) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex md:hidden justify-around p-2 z-50">
+        <button onclick="showSection('home')" class="flex flex-col items-center p-2 text-gray-400" data-section-mob="home"><i data-lucide="home" size="20"></i><span class="text-[9px] mt-1">Accueil</span></button>
+        <button onclick="showSection('journal')" class="flex flex-col items-center p-2 text-gray-400" data-section-mob="journal"><i data-lucide="book-open" size="20"></i><span class="text-[9px] mt-1">Journal</span></button>
+        <button onclick="showSection('program')" class="flex flex-col items-center p-2 text-gray-400" data-section-mob="program"><i data-lucide="sparkles" size="20"></i><span class="text-[9px] mt-1">Prog.</span></button>
+        <button onclick="showSection('score')" class="flex flex-col items-center p-2 text-gray-400" data-section-mob="score"><i data-lucide="activity" size="20"></i><span class="text-[9px] mt-1">Score</span></button>
+        <button onclick="showSection('breathing')" class="flex flex-col items-center p-2 text-gray-400" data-section-mob="breathing"><i data-lucide="wind" size="20"></i><span class="text-[9px] mt-1">Zen</span></button>
+    </nav>
+
+    <!-- Contenu Principal -->
+    <main class="md:ml-64 p-4 md:p-10 pb-24 md:pb-10">
+        
+        <!-- SECTION ACCUEIL -->
+        <section id="section-home" class="content-section active animate-in">
+            <div class="max-w-4xl mx-auto bg-white rounded-[2rem] p-8 md:p-16 shadow-sm border border-gray-50 text-center relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-[#8da399] opacity-5 rounded-bl-full"></div>
+                <h2 class="text-4xl md:text-6xl font-['Cormorant_Garamond'] text-[#8da399] mb-6">Bienvenue dans votre <br>Espace Équilibre</h2>
+                <p class="text-gray-500 italic text-lg mb-10 max-w-lg mx-auto">"Prenez un instant pour écouter votre corps et cultiver votre harmonie intérieure."</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto">
+                    <button onclick="showSection('journal')" class="bg-[#8da399] text-white p-6 rounded-2xl shadow-lg shadow-[#8da399]/20 hover:scale-105 transition-transform">Remplir mon journal</button>
+                    <button onclick="showSection('breathing')" class="bg-[#f5f1e9] text-[#8da399] p-6 rounded-2xl hover:scale-105 transition-transform">Respirer maintenant</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION JOURNAL -->
+        <section id="section-journal" class="content-section hidden">
+            <h2 class="text-3xl font-['Cormorant_Garamond'] text-[#8da399] mb-6 font-bold">Journal Bien-Être</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-50">
+                    <h3 class="font-bold mb-4">Aujourd'hui</h3>
+                    <div class="space-y-4">
+                        <input type="date" id="journal-date" class="w-full p-2 bg-[#f5f1e9]/50 border-0 rounded-lg outline-none">
+                        <div class="slider-group">
+                            <label class="text-xs font-bold text-gray-400 uppercase">Stress <span id="val-stress" class="text-[#8da399]">5</span>/10</label>
+                            <input type="range" id="input-stress" min="0" max="10" value="5" class="w-full accent-[#8da399]" oninput="updateVal('stress')">
+                        </div>
+                        <div class="slider-group">
+                            <label class="text-xs font-bold text-gray-400 uppercase">Énergie <span id="val-energy" class="text-[#8da399]">5</span>/10</label>
+                            <input type="range" id="input-energy" min="0" max="10" value="5" class="w-full accent-[#8da399]" oninput="updateVal('energy')">
+                        </div>
+                        <div class="slider-group">
+                            <label class="text-xs font-bold text-gray-400 uppercase">Sommeil <span id="val-sleep" class="text-[#8da399]">5</span>/10</label>
+                            <input type="range" id="input-sleep" min="0" max="10" value="5" class="w-full accent-[#8da399]" oninput="updateVal('sleep')">
+                        </div>
+                        <div class="slider-group">
+                            <label class="text-xs font-bold text-gray-400 uppercase">Humeur <span id="val-mood" class="text-[#8da399]">5</span>/10</label>
+                            <input type="range" id="input-mood" min="0" max="10" value="5" class="w-full accent-[#8da399]" oninput="updateVal('mood')">
+                        </div>
+                        <textarea id="journal-notes" placeholder="Notes du jour..." class="w-full p-3 bg-[#f5f1e9]/50 border-0 rounded-lg outline-none text-sm h-24"></textarea>
+                        <button onclick="saveJournal()" class="w-full bg-[#8da399] text-white py-3 rounded-xl font-bold shadow-md">Enregistrer</button>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-50 h-[400px]">
+                    <h3 class="font-bold mb-4">Évolution</h3>
+                    <canvas id="journalChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION PROGRAMME -->
+        <section id="section-program" class="content-section hidden">
+            <h2 class="text-3xl font-['Cormorant_Garamond'] text-[#8da399] mb-6 font-bold">Mon Programme</h2>
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-50">
+                <div class="flex border-b border-gray-50">
+                    <button onclick="setProgramTab('stress')" class="prog-tab active flex-1 py-4 text-sm font-bold" data-tab="stress">Stress</button>
+                    <button onclick="setProgramTab('sleep')" class="prog-tab flex-1 py-4 text-sm font-bold" data-tab="sleep">Sommeil</button>
+                    <button onclick="setProgramTab('digestion')" class="prog-tab flex-1 py-4 text-sm font-bold" data-tab="digestion">Digestion</button>
+                </div>
+                <div id="program-content" class="p-8">
+                    <!-- Dynamic Content Injection -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION SCORE -->
+        <section id="section-score" class="content-section hidden">
+            <h2 class="text-3xl font-['Cormorant_Garamond'] text-[#8da399] mb-6 font-bold">Score d'Équilibre</h2>
+            <div id="score-quiz" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-50 max-w-2xl mx-auto">
+                <p class="text-sm text-gray-400 mb-8 italic">Répondez à ces questions de 1 (Jamais) à 5 (Toujours).</p>
+                <div id="quiz-questions" class="space-y-6"></div>
+                <button onclick="calculateScore()" class="mt-10 w-full bg-[#8da399] text-white py-4 rounded-xl font-bold text-xl shadow-lg">Calculer mon score</button>
+            </div>
+            <div id="score-result" class="hidden bg-white p-10 rounded-2xl shadow-sm border border-gray-50 text-center max-w-2xl mx-auto">
+                <div class="text-6xl font-['Cormorant_Garamond'] text-[#8da399] mb-2" id="final-score">0</div>
+                <div class="text-gray-400 text-xs mb-6">/ 75</div>
+                <h3 class="text-2xl font-bold mb-4" id="score-label">---</h3>
+                <p class="text-gray-600 mb-8" id="score-advice">---</p>
+                <button onclick="resetQuiz()" class="text-[#8da399] font-bold underline">Refaire le test</button>
+            </div>
+        </section>
+
+        <!-- SECTION SUIVI -->
+        <section id="section-followup" class="content-section hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-['Cormorant_Garamond'] text-[#8da399] font-bold">Suivi Post-Séance</h2>
+                <button onclick="toggleSessionForm()" class="bg-[#8da399] text-white p-3 rounded-full shadow-lg"><i data-lucide="plus"></i></button>
+            </div>
+            
+            <div id="session-form" class="hidden bg-white p-6 rounded-2xl shadow-lg border border-[#8da399]/20 mb-8 max-w-md mx-auto">
+                <h3 class="font-bold mb-4">Nouvelle séance</h3>
+                <div class="space-y-4">
+                    <input type="date" id="sess-date" class="w-full p-3 bg-[#f5f1e9]/50 rounded-xl outline-none border-0">
+                    <input type="text" id="sess-obj" placeholder="Objectif de la séance" class="w-full p-3 bg-[#f5f1e9]/50 rounded-xl outline-none border-0">
+                    <textarea id="sess-adv" placeholder="Conseils donnés..." class="w-full p-3 bg-[#f5f1e9]/50 rounded-xl outline-none border-0 h-24"></textarea>
+                    <button onclick="addSession()" class="w-full bg-[#8da399] text-white py-3 rounded-xl font-bold">Enregistrer la séance</button>
+                </div>
+            </div>
+
+            <div id="sessions-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Session Cards Injection -->
+            </div>
+        </section>
+
+        <!-- SECTION RESPIRATION -->
+        <section id="section-breathing" class="content-section hidden">
+            <div class="max-w-md mx-auto text-center pt-10">
+                <h2 class="text-3xl font-['Cormorant_Garamond'] text-[#8da399] mb-2 font-bold">Cohérence Cardiaque</h2>
+                <p class="text-gray-400 text-sm mb-12 italic">Inspirer 5s / Expirer 5s</p>
+                
+                <div class="relative flex items-center justify-center mb-16">
+                    <!-- Ripple effect -->
+                    <div id="ripple" class="absolute w-48 h-48 bg-[#8da399] rounded-full opacity-0 scale-100"></div>
+                    <!-- Main Circle -->
+                    <div id="breath-circle" class="relative z-10 w-48 h-48 rounded-full bg-white shadow-2xl flex flex-col items-center justify-center border-4 border-[#f5f1e9] transition-all duration-[5000ms] ease-in-out">
+                        <span id="breath-text" class="text-[#8da399] font-bold text-xl">Prêt ?</span>
+                        <span id="breath-timer" class="text-3xl font-light text-[#8da399] hidden">5</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-center gap-12 mb-10">
+                    <div class="text-center">
+                        <span id="cycle-count" class="block text-2xl font-bold text-[#8da399]">0</span>
+                        <span class="text-[10px] text-gray-400 uppercase tracking-widest">Cycles</span>
+                    </div>
+                    <button id="breath-btn" onclick="toggleBreathing()" class="w-20 h-20 bg-[#8da399] text-white rounded-full flex items-center justify-center shadow-xl shadow-[#8da399]/30 transition-transform active:scale-95">
+                        <i data-lucide="play" id="breath-icon"></i>
+                    </button>
+                    <div class="text-center">
+                        <span id="total-min" class="block text-2xl font-bold text-[#8da399]">0.0</span>
+                        <span class="text-[10px] text-gray-400 uppercase tracking-widest">Minutes</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-gray-100 flex gap-3 text-left">
+                    <i data-lucide="info" class="text-[#8da399] shrink-0" size="18"></i>
+                    <p class="text-[11px] text-gray-400 leading-relaxed italic">Pratiquez 5 minutes, 3 fois par jour pour réduire durablement votre stress et réguler votre rythme cardiaque.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
     <script>
-        // Gestionnaire d'erreurs pour le débogage en production
-        window.onerror = function(msg, url, line) {
-            console.error("Détails de l'erreur :", msg, "à", url, "ligne", line);
-            if (msg.includes('MIME') || msg.includes('invariant=31')) {
-                console.warn("Conflit de type ou de version détecté. Tentative de correction automatique via l'importmap.");
-            }
-        };
+        // Initialiser Lucide
+        lucide.createIcons();
     </script>
 </body>
 </html>

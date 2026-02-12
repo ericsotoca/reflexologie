@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { LayoutDashboard, BookOpen, Sparkles, Activity, MessageSquare, Wind } from 'lucide-react';
-import { Question } from './types';
+import { Question } from './types.ts';
 
 export const QUESTIONS: Question[] = [
   { id: 1, text: "Je me sens souvent calme et serein(e)." },
